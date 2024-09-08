@@ -1,0 +1,303 @@
+use FoodInspectionChat;
+
+db.createCollection("conversaciones", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            required: ["inspector", "fecha", "inspResultado", "mensaje", "establecimiento"],
+            properties: {
+                inspector: {
+                    bsonType: "string",
+                    description: "Debe ser un string y es obligatorio"
+                },
+                fecha: {
+                    bsonType: "date",
+                    description: "Debe ser una fecha y es obligatorio"
+                },
+                inspResultado: {
+                    enum: ["Pasa", "Pasa con condiciones", "Falla"],
+                    description: "Debe ser uno de los siguientes valores: 'Pasa', 'Pasa con condiciones', 'Falla'"
+                },
+                violacion: {
+                    bsonType: "string",
+                    description: "Debe ser un string y es opcional"
+                },
+                mensaje: {
+                    bsonType: "string",
+                    description: "Debe ser un string y es obligatorio"
+                },
+                etiquetas: {
+                    bsonType: "array",
+                    items: {
+                        bsonType: "string"
+                    },
+                    description: "Debe ser un array de strings y es opcional"
+                },
+                establecimiento: {
+                    bsonType: "object",
+                    required: ["id", "nombre"],
+                    properties: {
+                        id: {
+                            bsonType: "objectId",
+                            description: "Debe ser un ObjectId y es obligatorio"
+                        },
+                        nombre: {
+                            bsonType: "string",
+                            description: "Debe ser un string y es obligatorio"
+                        }
+                    },
+                    description: "Debe ser un objeto con los campos 'id' y 'nombre' y es obligatorio"
+                }
+            }
+        }
+    }
+});
+
+
+db.conversaciones.insertMany([
+    {
+        inspector: "Juan Pérez",
+        fecha: new Date("2024-06-01"),
+        inspResultado: "Pasa",
+        violacion: "Ninguna",
+        mensaje: "Todo está en orden.",
+        etiquetas: [],
+        establecimiento: {
+            id: ObjectId(),
+            nombre: "La cocina de María"
+        }
+    },
+    {
+        inspector: "Ana López",
+        fecha: new Date("2024-06-02"),
+        inspResultado: "Falla",
+        violacion: "Mal manejo de alimentos",
+        mensaje: "Se observó un manejo incorrecto de alimentos.",
+        etiquetas: [],
+        establecimiento: {
+            id: ObjectId(),
+            nombre: "Bella Napoli"
+        }
+    },
+    {
+        inspector: "Carlos García",
+        fecha: new Date("2024-06-03"),
+        inspResultado: "Pasa con condiciones",
+        violacion: "Falta de higiene",
+        mensaje: "Se necesita mejorar la higiene del lugar.",
+        etiquetas: [],
+        establecimiento: {
+            id: ObjectId(),
+            nombre: "El rincón del café"
+        }
+    },
+    {
+        inspector: "Marta Gómez",
+        fecha: new Date("2024-06-04"),
+        inspResultado: "Falla",
+        violacion: "Almacenamiento incorrecto",
+        mensaje: "Los alimentos no se almacenan correctamente.",
+        etiquetas: [],
+        establecimiento: {
+            id: ObjectId(),
+            nombre: "La Baguette"
+        }
+    },
+    {
+        inspector: "Luis Fernández",
+        fecha: new Date("2024-06-05"),
+        inspResultado: "Pasa",
+        violacion: "Ninguna",
+        mensaje: "Inspección sin problemas.",
+        etiquetas: [],
+        establecimiento: {
+            id: ObjectId(),
+            nombre: "Big Burger"
+        }
+    },
+    {
+        inspector: "Laura Sánchez",
+        fecha: new Date("2024-06-06"),
+        inspResultado: "Pasa con condiciones",
+        violacion: "Ingredientes vencidos",
+        mensaje: "Se encontraron ingredientes vencidos.",
+        etiquetas: [],
+        establecimiento: {
+            id: ObjectId(),
+            nombre: "El sabor de México"
+        }
+    },
+    {
+        inspector: "Pedro Ramírez",
+        fecha: new Date("2024-06-07"),
+        inspResultado: "Falla",
+        violacion: "Contaminacion cruzada",
+        mensaje: "Existe riesgo de contaminación cruzada.",
+        etiquetas: [],
+        establecimiento: {
+            id: ObjectId(),
+            nombre: "Parrilla Don Juan"
+        }
+    },
+    {
+        inspector: "Sofía Hernández",
+        fecha: new Date("2024-06-08"),
+        inspResultado: "Pasa",
+        violacion: "Ninguna",
+        mensaje: "La inspección fue satisfactoria.",
+        etiquetas: [],
+        establecimiento: {
+            id: ObjectId(),
+            nombre: "La Esquina del Sabor"
+        }
+    },
+    {
+        inspector: "Diego Torres",
+        fecha: new Date("2024-06-09"),
+        inspResultado: "Falla",
+        violacion: "Falta de control temperatura",
+        mensaje: "No se está controlando adecuadamente la temperatura.",
+        etiquetas: [],
+        establecimiento: {
+            id: ObjectId(),
+            nombre: "La Rustica"
+        }
+    },
+    {
+        inspector: "Andrea Ruiz",
+        fecha: new Date("2024-06-10"),
+        inspResultado: "Pasa con condiciones",
+        violacion: "Malas practicas de limpieza",
+        mensaje: "Se detectaron malas prácticas de limpieza.",
+        etiquetas: [],
+        establecimiento: {
+            id: ObjectId(),
+            nombre: "Sabor Oriental"
+        }
+    },
+    {
+        inspector: "Manuel Gutiérrez",
+        fecha: new Date("2024-06-11"),
+        inspResultado: "Falla",
+        violacion: "Incumplimientos de seguridad",
+        mensaje: "Se encontraron incumplimientos de seguridad.",
+        etiquetas: [],
+        establecimiento: {
+            id: ObjectId(),
+            nombre: "Aroma de Café"
+        }
+    },
+    {
+        inspector: "Elena Castro",
+        fecha: new Date("2024-06-12"),
+        inspResultado: "Pasa",
+        violacion: "Ninguna",
+        mensaje: "La inspección fue exitosa.",
+        etiquetas: [],
+        establecimiento: {
+            id: ObjectId(),
+            nombre: "Dulce Tentación"
+        }
+    },
+    {
+        inspector: "Ricardo Medina",
+        fecha: new Date("2024-06-13"),
+        inspResultado: "Pasa con condiciones",
+        violacion: "Manipulacion inadecuada",
+        mensaje: "Se observó manipulación inadecuada de alimentos.",
+        etiquetas: [],
+        establecimiento: {
+            id: ObjectId(),
+            nombre: "Burguer Master"
+        }
+    },
+    {
+        inspector: "María José",
+        fecha: new Date("2024-06-14"),
+        inspResultado: "Falla",
+        violacion: "Falta de capacitacion",
+        mensaje: "El personal no está debidamente capacitado.",
+        etiquetas: [],
+        establecimiento: {
+            id: ObjectId(),
+            nombre: "La Trattona"
+        }
+    },
+    {
+        inspector: "Julio Morales",
+        fecha: new Date("2024-06-15"),
+        inspResultado: "Pasa",
+        violacion: "Ninguna",
+        mensaje: "Todo está en orden.",
+        etiquetas: [],
+        establecimiento: {
+            id: ObjectId(),
+            nombre: "Parrillada La Argentina"
+        }
+    },
+    {
+        inspector: "Gloria Fernández",
+        fecha: new Date("2024-06-16"),
+        inspResultado: "Pasa con condiciones",
+        violacion: "Oficina no encontrada",
+        mensaje: "La oficina no fue encontrada en la ubicación indicada.",
+        etiquetas: [],
+        establecimiento: {
+            id: ObjectId(),
+            nombre: "El Cafecito"
+        }
+    },
+    {
+        inspector: "Carmen Méndez",
+        fecha: new Date("2024-06-17"),
+        inspResultado: "Falla",
+        violacion: "Falta de higiene",
+        mensaje: "La falta de higiene es preocupante.",
+        etiquetas: [],
+        establecimiento: {
+            id: ObjectId(),
+            nombre: "Pizza Express"
+        }
+    },
+    {
+        inspector: "Rafael Pérez",
+        fecha: new Date("2024-06-18"),
+        inspResultado: "Pasa",
+        violacion: "Ninguna",
+        mensaje: "La inspección no presentó problemas.",
+        etiquetas: [],
+        establecimiento: {
+            id: ObjectId(),
+            nombre: "El rincón de las Carnes"
+        }
+    },
+    {
+        inspector: "Adriana López",
+        fecha: new Date("2024-06-19"),
+        inspResultado: "Pasa con condiciones",
+        violacion: "Malas practicas de limpieza",
+        mensaje: "Las prácticas de limpieza deben mejorar.",
+        etiquetas: [],
+        establecimiento: {
+            id: ObjectId(),
+            nombre: "Pan y Mas"
+        }
+    },
+    {
+        inspector: "Fernando Herrera",
+        fecha: new Date("2024-06-20"),
+        inspResultado: "Falla",
+        violacion: "Manipulacion inadecuada",
+        mensaje: "Se encontraron problemas graves de manipulación.",
+        etiquetas: [],
+        establecimiento: {
+            id: ObjectId(),
+            nombre: "Burgerland"
+        }
+    }
+]);
+
+db.conversaciones.find().pretty();
+
+
+

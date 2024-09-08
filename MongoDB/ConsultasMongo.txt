@@ -1,0 +1,21 @@
+use FoodInspectionChat;
+
+// Consultas pedidas:
+
+//Consulta 1: Cuantas conversaciones sobre violaciones diferentes se constataron.
+db.conversaciones.distinct("violacion").length
+
+//Consulta 2: Obtener los mejores establecimientos basado en la cantidad de inspecciones aprobadas.
+db.conversaciones.aggregate([
+  { $match: { inspResultado: "Pasa" } },
+  { $group: { _id: "$establecimiento.nombre", count: { $sum: 1 } } },
+  { $sort: { count: -1 } }
+])
+
+//Consulta 3: Modificar una conversación agregando una etiqueta “IMPORTANTE” para todos aquellos
+//chats que tengan referencia a resultados reprobados ('Falla').
+db.conversaciones.updateMany(
+  { inspResultado: "Falla" },
+  { $addToSet: { etiquetas: "IMPORTANTE" } }
+)
+
